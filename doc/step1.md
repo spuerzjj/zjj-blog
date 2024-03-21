@@ -46,9 +46,7 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router/index.tsx'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router}></RouterProvider>
-)
+ReactDOM.createRoot(document.getElementById('root')!).render(<RouterProvider router={router}></RouterProvider>)
 ```
 
 - #### App.tsx
@@ -155,7 +153,7 @@ export default {
 - 提供 3 种选项给用户，`light` `dark` `跟随操作系统` ，默认跟随操作系统，选择结果保存在`localstorage`中
 - 根据 html 根标签上的 class 是`dark` 还是 `light` 来决定深色和亮色，tailwind 提供了`DarkMode selector`功能
 
-### 1. 配置 tailwind
+### 2. 配置 tailwind
 
 - #### 配置 tailwind.config.js
   tailwind 提供一个 Dark Mode 功能，在类名之前添加`dark:`，表示暗色模式下采用的样式
@@ -175,16 +173,14 @@ module.exports = {
 function App() {
   return (
     // 这表示light模式下黑色字体，白色背景，dark模式下，白色字体，黑色背景
-    <div className="text-black bg-white dark:text-white dark:bg-black">
-      hello World
-    </div>
+    <div className="text-black bg-white dark:text-white dark:bg-black">hello World</div>
   )
 }
 ```
 
 打开浏览器，手动修改 html 标签的 class 试一下主题的切换
 
-### 2. 切换主题的函数实现
+### 3. 切换主题的函数实现
 
 ```ts
 // src/utils/theme.ts，新建一下这个文件
@@ -210,23 +206,18 @@ export function getTheme(): Theme {
 // 获取是否是暗色主题
 export function getIsDark(): boolean {
   const theme = getTheme()
-  const isDark =
-    theme === 'dark' ||
-    (theme !== 'light' &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const isDark = theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)
 
   return isDark
 }
 
 // 根据当前设置的主题改变html的类名
 export function initSystemTheme() {
-  getIsDark()
-    ? document.documentElement.classList.add('dark')
-    : document.documentElement.classList.remove('dark')
+  getIsDark() ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
 }
 ```
 
-### 3. 写一个切换主题的控件
+### 4. 写一个切换主题的控件
 
 一个 button 选择控件，效果如下
 ![alt text](http://120.77.169.147:8080/zjj-blog/step1/themeBtn.png)
@@ -234,4 +225,5 @@ ui 部分就贴代码了，文件目录：`src/components/ThemeBtm/index.tsx`里
 我将这个组件固定在了页面右上角，后续再进行调整
 
 ## 结语
-我们已经搭建好了继承的框架，确定了ui和css方案。接下来就是布局整体页面。
+
+我们已经搭建好了继承的框架，确定了 ui 和 css 方案。接下来就是布局整体页面。
